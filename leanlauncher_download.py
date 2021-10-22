@@ -53,3 +53,27 @@ def leanlauncher_download_version(version=LATEST_VERSION, path=DEFAULT_INSTALL_P
 
   print(f"Minecraft version {version} successfully installed to {path}!")
   return True
+
+def leanlauncher_download_prompt():
+  """
+  Displays various prompts directing the user to install a version of Minecraft.
+  """
+
+  print("""
+Download Minecraft
+---------------------
+  """)
+
+  version = input(f"Which version would you like to download? [{leanlauncher_download.LATEST_VERSION}] ")
+  path = input(f"Where would you like to download Minecraft to? [{leanlauncher_download.DEFAULT_INSTALL_PATH}] ")
+
+  if version == "":
+    version = leanlauncher_download.LATEST_VERSION
+  if path == "":
+    path = leanlauncher_download.DEFAULT_INSTALL_PATH
+
+  print(f"Downloading Minecraft {version} to {path}...")
+
+  status = leanlauncher_download.leanlauncher_download_version(version, path)
+  if not status:
+    print(f"Error installing version {version}")
