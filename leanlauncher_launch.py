@@ -27,72 +27,44 @@ SOFTWARE.
 """
 
 import minecraft_launcher_lib
+import subprocess
 
 import leanlauncher_download
-import leanlauncher_launch
 
 ### functions ###
-
-# user input #
-def leanlauncher_main_menu():
+def leanlauncher_launch_offline(version):
   """
-  Display a list of selections for the user to choose on the main menu,
-  and allows the user to choose which one they want.
+  Launches the specified version of the game in offline mode,
+  that is, without online authentication.
 
-  Returns:
-    Int corresponding to the action desired.
+  Parameters:
+    version (str): the version of the game to launch
+  """
+
+  options = minecraft_launcher_lib.utils.generate_test_options()
+  command = minecraft_launcher_lib.command.get_minecraft_command(version, leanlauncher_download.DEFAULT_INSTALL_PATH, options)
+
+  subprocess.call(command)
+
+def leanlauncher_launch_prompt(offline):
+  """
+  Displays a prompt to launch the game.
+
+  Parameters:
+    offline (bool): True if launching in offline mode, False otherwise
   """
 
   print("""
-Choose one of the following:
-
-1. Launch Minecraft (-WIP-)
-2. Launch Minecraft Offline
-3. Download Minecraft
-4. Authenticate (Mojang) (-WIP-)
-5. Authenticate (Microsoft) (-WIP-)
-6. LeanLauncher Settings (-WIP-)
-7. Quit
+Launch Minecraft
+---------------------
   """)
 
-  choice = input("> ")
-  if choice.isnumeric():
-    choice = int(choice)
-    return choice
+  version = input("Which version do you want to launch? ")
+  if minecraft_launcher_lib.utils.is_version_valid(version, leanlauncher_download.DEFAULT_INSTALL_PATH):
+    if offline:
+      leanlauncher_launch_offline(version)
+    else:
+      # TODO: online launching
+      pass
   else:
-    print(f"Invalid selection {choice}, please try again")
-    return leanlauncher_main_menu()
-
-
-# processing #
-def leanlauncher_act_upon_choice(choice):
-  """
-  Performs the action specified by choice.
-
-  Parameters:
-    choice (int): the number of the action desired
-  """
-
-  if choice == 1:
-    pass
-  elif choice == 2:
-    leanlauncher_launch.leanlauncher_launch_prompt(True)
-  elif choice == 3:
-    leanlauncher_download.leanlauncher_download_prompt()
-  elif choice == 4:
-    pass
-  elif choice == 5:
-    pass
-  elif choice == 6:
-    pass
-  elif choice == 7:
-    exit()
-
-
-
-### main program code ###
-if __name__ == "__main__":
-  while True:
-    choice = leanlauncher_main_menu()
-
-    leanlauncher_act_upon_choice(choice)
+    print(f"Version {version} not found; did you remember to install it?")
