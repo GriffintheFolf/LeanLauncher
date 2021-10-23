@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 """
 LeanLauncher v0.1
 Based on minecraft-launcher-lib:
