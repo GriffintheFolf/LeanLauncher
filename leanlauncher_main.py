@@ -28,8 +28,12 @@ SOFTWARE.
 
 import minecraft_launcher_lib
 
+import leanlauncher_auth_microsoft
 import leanlauncher_download
 import leanlauncher_launch
+
+### globals ###
+LEANLAUNCHER_LAUNCH_OPTIONS = {}
 
 ### functions ###
 
@@ -74,18 +78,19 @@ def leanlauncher_act_upon_choice(choice):
   """
 
   if choice == 1:
-    pass
+    leanlauncher_launch.leanlauncher_launch_prompt(False, LEANLAUNCHER_LAUNCH_OPTIONS)
   elif choice == 2:
-    leanlauncher_launch.leanlauncher_launch_prompt(True)
+    leanlauncher_launch.leanlauncher_launch_prompt(True, None)
   elif choice == 3:
     leanlauncher_download.leanlauncher_download_prompt()
   elif choice == 4:
     pass
   elif choice == 5:
-    pass
+    LEANLAUNCHER_LAUNCH_OPTIONS = leanlauncher_auth_microsoft.leanlauncher_open_auth_microsoft()
   elif choice == 6:
     pass
   elif choice == 7:
+    print("Goodbye!")
     exit()
 
 

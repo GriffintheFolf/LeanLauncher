@@ -44,12 +44,26 @@ def leanlauncher_launch_offline(version):
 
   subprocess.call(command)
 
-def leanlauncher_launch_prompt(offline):
+def leanlauncher_launch_online(version, options):
+  """
+  Launches the specified version of the game in online mode.
+
+  Parameters:
+    version (str): the version of the game to launch
+    options (Dictionary): used to specify login options for the game
+  """
+
+  command = minecraft_launcher_lib.command.get_minecraft_command(version, leanlauncher_download.DEFAULT_INSTALL_PATH, options)
+
+  subprocess.call(command)
+
+def leanlauncher_launch_prompt(offline, options):
   """
   Displays a prompt to launch the game.
 
   Parameters:
     offline (bool): True if launching in offline mode, False otherwise
+    options (Dictionary): used to specify login options for the game. Specify None if launching offline.
   """
 
   print("""
@@ -59,10 +73,9 @@ Launch Minecraft
 
   version = input("Which version do you want to launch? ")
   if minecraft_launcher_lib.utils.is_version_valid(version, leanlauncher_download.DEFAULT_INSTALL_PATH):
-    if offline:
+    if offline and options == None:
       leanlauncher_launch_offline(version)
     else:
-      # TODO: online launching
-      pass
+      leanlauncher_launch_online(version, options)
   else:
     print(f"Version {version} not found; did you remember to install it?")
