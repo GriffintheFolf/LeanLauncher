@@ -27,8 +27,10 @@ SOFTWARE.
 """
 This file contains client secrets used for authentication with Microsoft Azure.
 
-If you are basing your own launcher off this code, be sure to set these keys
-to your own Azure application, otherwise it will be useless.
+If you are basing your own launcher off this code, you must copy or rename this
+file to leanlauncher_keys.py.
+Be sure to set the keys to your own Azure application, otherwise it will be
+useless.
 
 Furthermore, you MUST ensure that the keys are stored in such a way that they
 will not be easily accessible by a wouldbe attacker.
